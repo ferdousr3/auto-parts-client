@@ -47,7 +47,7 @@ function App() {
             <Route path="addReview" element={<AddReview />} />
             <Route path="manageProduct" element={<ManageProduct />} />
             <Route path="manageAllOrders" element={<ManageAllOrders/>} />
-            <Route path="users" element={</>} />
+            <Route path="users" element={<Users/>} />
           </Route>
           <Route path="/myPortfolio" element={<MyPortfolio />} />
           <Route path="/login" element={<Login />} />

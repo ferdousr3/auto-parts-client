@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../../components/Share/Button/Button";
-import ProfIcon from '../../assets/images/icons2.png'
 import Photo1 from '../../assets/images/about/1.jpg'
 import Photo2 from '../../assets/images/about/2.jpg'
 import Photo3 from '../../assets/images/about/3.jpg'

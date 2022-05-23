@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FooterBg from '../../../assets/images/footer.png'
+
 
 const Footer = () => {
 
@@ -10,12 +10,7 @@ const Footer = () => {
     <>
       <div>
         <div
-          style={{
-            background: `url(${FooterBg})`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
+        
           className="container mx-auto mt-5"
         >
           <div className="footer py-10 grid grid-cols-2 md:grid-cols-3 text-base-content">
