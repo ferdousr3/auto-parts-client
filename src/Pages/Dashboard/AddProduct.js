@@ -1,19 +1,22 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
+import auth from "../../firebase.init";
 
 const AddProduct = () => {
+  const [user] = useAuthState(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm();
-  const { data: services, isLoading } = useQuery("services", () =>
-    fetch("http://localhost:5000/service").then((res) => res.json())
-  );
+  // const { data: services, isLoading } = useQuery("services", () =>
+  //   fetch("http://localhost:5000/service").then((res) => res.json())
+  // );
 
   const imageStorageKey = "396c01ff41dfa2f53913961308fb5a70";
 
@@ -32,17 +35,20 @@ const AddProduct = () => {
           const img = result.data.url;
           const Product = {
             name: data.name,
-            email: data.email,
-            specialty: data.specialty,
+            email: user.email,
+            price: data.price,
+            quantity: data.quantity,
+            description: data.description,
             img: img,
           };
           // Product data sent to database
-          const url = `http://localhost:5000/Product`;
+          const url = `http://localhost:5000/Products`;
+          console.log(Product);
           fetch(url, {
             method: "POST",
             headers: {
               "content-type": "application/json",
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
             body: JSON.stringify(Product),
           })
@@ -50,20 +56,17 @@ const AddProduct = () => {
             .then((inserted) => {
               if (inserted.insertedId) {
                 toast.success(`Product ${data.name} add successfully`);
-                reset()
-              }
-              else(
-                toast.error(`Product ${data.name} add to failed`)
-              )
+                reset();
+              } else toast.error(`Product ${data.name} add to failed`);
             });
         }
         console.log(result);
       });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
@@ -74,6 +77,31 @@ const AddProduct = () => {
               Add a Product
             </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
+              {/* email */}
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  value={user.email || ""}
+                  disabled
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("email")}
+                />
+                <label className="label">
+                  {errors.email?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.email.message}
+                    </span>
+                  )}
+                  {errors.email?.type === "pattern" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.email.message}
+                    </span>
+                  )}
+                </label>
+              </div>
               {/* name*/}
               <div className="form-control w-full max-w-xs">
                 <label className="label">
@@ -93,7 +121,7 @@ const AddProduct = () => {
                       message: "Must be 3 characters or longer",
                     },
                     pattern: {
-                      value: /^[A-Za-z]/i,
+                      value: /^[A-Za-z]/,
                       message: "Provide a valid Name",
                     },
                   })}
@@ -116,63 +144,116 @@ const AddProduct = () => {
                   )}
                 </label>
               </div>
-              {/* email */}
+
+              {/*quantity*/}
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text">Quantity</span>
                 </label>
                 <input
-                  type="email"
-                  placeholder="exmpl@mail.com"
+                  type="number"
+                  placeholder="Quantity"
                   className="input input-bordered w-full max-w-xs"
-                  {...register("email", {
+                  {...register("quantity", {
                     required: {
                       value: true,
-                      message: "Email is Required",
+                      message: "Quantity is Required",
                     },
-                    pattern: {
-                      value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                      message: "Provide a valid Email",
+                    minLength: {
+                      value: 2,
+                      message: "Must be 2 characters or longer",
                     },
                   })}
                 />
                 <label className="label">
-                  {errors.email?.type === "required" && (
+                  {errors.quantity?.type === "required" && (
                     <span className="label-text-alt text-red-600">
-                      {errors.email.message}
+                      {errors.quantity.message}
                     </span>
                   )}
-                  {errors.email?.type === "pattern" && (
+                  {errors.quantity?.type === "minLength" && (
                     <span className="label-text-alt text-red-600">
-                      {errors.email.message}
+                      {errors.quantity.message}
                     </span>
                   )}
                 </label>
               </div>
-              {/* password */}
+              {/*Price*/}
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Specialty</span>
+                  <span className="label-text">Price</span>
                 </label>
-                <select
-                  {...register("specialty")}
-                  className="select select-bordered w-full max-w-xs mb-6"
-                >
-                  {services.map((service) => (
-                    <option key={service._id} value={service.name}>
-                      {service.name}
-                    </option>
-                  ))}
-                </select>
+                <input
+                  type="number"
+                  placeholder="Price"
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("price", {
+                    required: {
+                      value: true,
+                      message: "Price is Required",
+                    },
+                    minLength: {
+                      value: 2,
+                      message: "Must be 2 characters or longer",
+                    },
+                  })}
+                />
+                <label className="label">
+                  {errors.price?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.price.message}
+                    </span>
+                  )}
+                  {errors.price?.type === "minLength" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.price.message}
+                    </span>
+                  )}
+                </label>
               </div>
-
+              {/* description */}
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Description</span>
+                </label>
+                <textarea
+                  cols="10"
+                  rows="5"
+                  type="text"
+                  placeholder="Description"
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("description", {
+                    required: {
+                      value: true,
+                      message: "Description is Required",
+                    },
+                    minLength: {
+                      value: 5,
+                      message: "Must be 3 characters or longer",
+                    },
+                  })}
+                />
+                <label className="label">
+                  {errors.description?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.description.message}
+                    </span>
+                  )}
+                  {errors.description?.type === "minLength" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.description.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+              {/* photo */}
               <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Photo</span>
                 </label>
                 <input
                   type="file"
-                  className="input input-bordered  max-w-xs block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  className="  max-w-xs block w-full"
                   {...register("image", {
                     required: {
                       value: true,

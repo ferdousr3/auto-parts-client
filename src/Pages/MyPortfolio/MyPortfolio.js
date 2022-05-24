@@ -43,24 +43,24 @@ const MyPortfolio = () => {
           <div className="grid grid-cols-1 md-grid-cols-6 lg:grid-cols-2 gap-5 ">
             <ProjectLink
               title="X-fit Gym"
-              technology="React, firebase"
+              technology="React, Firebase"
               description="A health club is a place that houses exercise equipment for the purpose of physical exercise. I provide some gym services for very low price,I have some excellent packages."
               link="https://x-fit-full.web.app/"
               name="x-fit"
             />
             <ProjectLink
-              title="X-fit Gym"
-              technology="React, firebase"
-              description="A health club is a place that houses exercise equipment for the purpose of physical exercise. I provide some gym services for very low price,I have some excellent packages."
-              link="https://x-fit-full.web.app/"
-              name="x-fit"
+              title="auto-vio"
+              technology="React, Firebase, Express, MongoDB"
+              description="Visitors will find an intriguing sanctuary with plenty to explore, from artful installations and haute cuisine to luminary engagements and the impressive collection of Genesis luxury vehicles"
+              link="https://auto-vio.web.app/"
+              name="auto-vio"
             />
             <ProjectLink
-              title="X-fit Gym"
-              technology="React, firebase"
-              description="A health club is a place that houses exercise equipment for the purpose of physical exercise. I provide some gym services for very low price,I have some excellent packages."
-              link="https://x-fit-full.web.app/"
-              name="x-fit"
+              title="TechItHouse"
+              technology="NextJS, Material UI,"
+              description="Tech IT house is a one-stop digital Service agency located in Bangladesh. Wе hаvе up to date еxреriеnсе in uѕеr web and graphics design, web development, digital marketing. ."
+              link="https://techithousenext.netlify.app/"
+              name="TechItHouse"
             />
           </div>
         </div>

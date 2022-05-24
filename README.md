@@ -14,12 +14,12 @@ There are some awesome features of this website are given bellow,
 ---
 
 
-## 1.Admin Dashboard: 
+## 1. Admin Dashboard: 
 
  There is functional admin dashboard, you can handle your products and users.
 
 
-## 2.Stock Management: 
+## 2. Stock Management: 
 
 You can manage your Stock add product, delete, edit stock.
 
@@ -30,14 +30,14 @@ You can Update your user details , like images social links etc.
 
 
 
-## 4.Free shipping  : 
+## 4. Free Shipping  : 
 
- we provide free shipping facility'.
+ We provide free shipping facility'.
 
 
-## 5.user  reviews : 
+## 5. User  Reviews : 
 
-every verify user can add there reviews
+Every verify user can add there reviews
 
 
 ---
@@ -49,4 +49,4 @@ React, Google-font:Poppins, firebase, tailwind CSS,react-firebase-hooks, react-i
 ```
 ### Backend usages  framework & library:
 ```
- MongoDb, Node ,Express,jwt
+ MongoDb, Node ,Express, jwt
