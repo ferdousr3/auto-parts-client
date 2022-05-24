@@ -10,7 +10,7 @@ const Button = ({ text,to }) => {
     <>
       <button
         onClick={() => handleNavigate(to)}
-        className=" btn  px-8 flex justify-center rounded-full text-sm  font-medium  text-black border-0 uppercase bg-info hover:bg-secondary  hover:text-white hover:transition-colors duration-400 "
+        className=" py-3  px-8 flex justify-center rounded-sm  text-sm  font-medium  text-black border-0 uppercase bg-info hover:bg-secondary  hover:text-white hover:transition-colors duration-400 "
       >
         {text}
       </button>

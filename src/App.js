@@ -27,7 +27,7 @@ function App() {
       <header>
         <Header />
       </header>
-      <main className=" pt-20 ">
+      <main className=" pt-16 ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />

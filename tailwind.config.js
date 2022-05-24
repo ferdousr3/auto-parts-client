@@ -11,6 +11,9 @@ module.exports = {
           "2xl": "6rem",
         },
       },
+      fontFamily: {
+        display: ["Rajdhani", "sans-serif"],
+      },
     },
   },
   daisyui: {
@@ -25,7 +28,7 @@ module.exports = {
           success: "#f3f3f3",
           bordercolor: "#e5e7eb",
           card: "#333333",
-          cards: "#d4fdfe",
+          cards: "#f6f6f6",
           "base-100": "#FFFFFF",
         },
       },

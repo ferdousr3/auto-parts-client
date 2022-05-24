@@ -18,7 +18,7 @@ const Header = () => {
   };
   return (
     <>
-      <div className="fixed shadow z-20 w-full bg-base-100 ">
+      <div className="fixed shadow-sm z-20 w-full bg-base-100 ">
         <div className="navbar bg-base-100 z-20  flex justify-between w-full   max-w-7xl  container mx-auto lg:px-10 ">
           <div className="navbar-start ">
             <div className="dropdown">
