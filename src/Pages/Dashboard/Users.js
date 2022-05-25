@@ -1,9 +1,16 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
 import Loading from "../../components/Loading/Loading";
+import VerifyAdmin from "../../components/VerifyAdmin/VerifyAdmin";
+import auth from "../../firebase.init";
+
+import useAdmin from "../../hooks/useAdmin";
 import UserRow from "./UserRow";
 
 const Users = () => {
+  const [user, loading] = useAuthState(auth);
+  const [admin, adminLoading] = useAdmin(user);
   const {
     data: users,
     isLoading,
@@ -16,15 +23,19 @@ const Users = () => {
       },
     }).then((res) => res.json())
   );
+  console.log(users);
 
-  if (isLoading) {
+  if (isLoading || loading || adminLoading) {
     return <Loading />;
+  }
+  if(!admin){
+    return <VerifyAdmin />
   }
 
   return (
     <>
       <div className="my-3">
-        <h2>Total users {users.length}</h2>
+        <h2>Total users {users?.length}</h2>
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -38,7 +49,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
               <UserRow
                 key={user._id}
                 refetch={refetch}

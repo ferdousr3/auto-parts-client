@@ -20,6 +20,9 @@ const RequireAdmin = ({ children }) => {
     signOut(auth);
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+  if(user && !admin){
+    return <VerifyUser />;
+  }
   // for verify user
   // if (user.providerData[0]?.providerId === "password" && !user.emailVerified) {
   //   return <VerifyUser />;

@@ -7,11 +7,11 @@ import ProductRow from "./ProductRow";
 const ManageProduct = () => {
   const [deletingProduct, setDeletingProduct] = useState(null);
   const {
-    data: Products,
+    data: products,
     isLoading,
     refetch,
-  } = useQuery("Products", () =>
-    fetch("http://localhost:5000/Product", {
+  } = useQuery("products", () =>
+    fetch("http://localhost:5000/products", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -23,7 +23,7 @@ const ManageProduct = () => {
 
   return (
     <>
-      <h2>Total Products {Products?.length}</h2>
+      <h2>Total Products {products?.length}</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -31,15 +31,16 @@ const ManageProduct = () => {
               <th>Sn</th>
               <th>Avatar</th>
               <th>Name</th>
-              <th>Specialty</th>
+              <th>Quantity</th>
+              <th>Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {Products.map((Product, index) => (
+            {products.map((product, index) => (
               <ProductRow
-                key={Product._id}
-                Product={Product}
+                key={product._id}
+                product={product}
                 index={index}
                 refetch={refetch}
                 setDeletingProduct={setDeletingProduct}

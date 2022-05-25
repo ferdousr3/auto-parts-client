@@ -34,7 +34,7 @@ const {email} = user
               Admin
             </p>
           ) : (
-            <button onClick={makeAdmin} className="btn btn-xs">
+            <button onClick={makeAdmin} className="btn btn-xs bg-accent text-white">
               Make Admin
             </button>
           )}

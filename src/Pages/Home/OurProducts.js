@@ -25,7 +25,7 @@ const OurProducts = () => {
         subTitle="We provide best quality car parts"
       />
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-5  ">
-        {products?.map((product, index) => (
+        {products?.slice(0,6).map((product, index) => (
           <div key={index} className=" border border-{#ededed">
             <div className="md:flex gap-5 py-10 px-6">
               <div className="img">
