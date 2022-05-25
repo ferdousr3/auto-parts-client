@@ -8,7 +8,7 @@ const FacilityItem = ({ icon,  title, description }) => {
           <img className="w-20 " src={icon} alt={title} />
         </div>
         <div className="ml-4">
-          <h1 className="text-xl text-accent font-display uppercase font-extrabold hover:text-secondary hover:transition-colors hover:duration-300 ">
+          <h1 className=" text-lg md:text-xl text-accent font-display uppercase font-extrabold hover:text-secondary hover:transition-colors hover:duration-300 ">
             {title}
           </h1>
           <p className="text-xs text-neutral pt-1">{description}</p>

@@ -1,0 +1,21 @@
+.rating ul {
+  display: flex;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  list-style: none;
+  
+}
+.rating svg {
+  margin-right: 2px;
+}
+.rating svg:nth-last-child() {
+  margin-right: 0px;
+}
+.star{
+    color: #f6621b;
+    margin-right: 1px;
+}
+.star_o{
+    color: #ddd;
+    margin-right: 1px;
+}

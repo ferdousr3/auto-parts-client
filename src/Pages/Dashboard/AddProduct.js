@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
+import PageTitle from "../../components/Share/PageTitle/PageTitle";
 import auth from "../../firebase.init";
 
 const AddProduct = () => {
@@ -70,9 +71,10 @@ const AddProduct = () => {
 
   return (
     <>
+      <PageTitle title="Add New Product" />
       <div className="container mx-auto lg:py-20 flex justify-center items-center">
         <div className="card w-96 bg-base-100 lg:border lg:border-bordercolor">
-          <div className="card-body">
+          <div className=" p-0 md:px-10 md:py-10 card-body">
             <h2 className="text-lg font-normal text-accent text-center">
               Add a Product
             </h2>
@@ -272,7 +274,7 @@ const AddProduct = () => {
               <input
                 type="submit"
                 value="Add"
-                className="btn w-full max-w-xs text-white"
+                className="btn w-full max-w-xs text-white  btn-secondary bg-accent hover:bg-primary border-0 "
               />
             </form>
           </div>

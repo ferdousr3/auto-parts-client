@@ -55,3 +55,37 @@ code {
   content: "−";
   color: #f6621b;
 }
+
+
+.swiper-button-next,.swiper-button-prev {
+  display: none !important;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 50%;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  color: #f6621b !important;
+}
+
+/*move swiper pagination on top to image */
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: 300ms opacity;
+  transform: translate3d(0, 0, 0);
+  background-color: transparent;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}

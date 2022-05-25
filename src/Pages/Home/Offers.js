@@ -11,10 +11,10 @@ const Offers = () => {
             <img
               src={OfferImage}
               alt="Auto-parts hero"
-              className=" w-52 lg:w-[48rem] flex justify-center items-center"
+              className=" w-48 lg:w-[48rem] flex justify-center items-center"
             />
             <div>
-              <h1 className="xl:pr-10 text-4xl lg:text-5xl font-[600] font-display uppercase pt-2 text-accent">
+              <h1 className="xl:pr-10 text-2xl md:text-4xl lg:text-5xl font-[600] font-display uppercase pt-2 text-accent">
                 AMP JUMP STARTER W/120 PSI COMPRESSOR
               </h1>
               <p className="pt-3 pb-2">

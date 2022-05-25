@@ -56,7 +56,7 @@ const SignUp = () => {
       <PageTitle title="Sign Up" />
       <div className="container mx-auto lg:py-32 flex justify-center items-center">
         <div className="card w-96 bg-base-100 lg:border lg:border-bordercolor">
-          <div className="card-body">
+          <div className=" p-0 md:px-10 md:py-10 card-body">
             <h2 className="text-lg font-normal text-accent text-center">
               Sign Up
             </h2>
