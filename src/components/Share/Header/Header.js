@@ -102,9 +102,9 @@ const Header = () => {
                         : "hover:text-primary transition-colors duration-300 "
                     }
                     onClick={handleClose}
-                    to="/appointment"
+                    to="/order"
                   >
-                    Appointment
+                    Order
                   </NavLink>
                 </li>
                 <li>
@@ -159,6 +159,18 @@ const Header = () => {
                   to="/blogs"
                 >
                   Blogs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary"
+                      : "hover:text-primary transition-colors duration-300 "
+                  }
+                  to="/order"
+                >
+                  Order
                 </NavLink>
               </li>
               <li>

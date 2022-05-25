@@ -19,6 +19,7 @@ import AddReview from "./Pages/Dashboard/AddReview";
 import ManageProduct from "./Pages/Dashboard/ManageProduct";
 import ManageAllOrders from "./Pages/Dashboard/ManageAllOrders";
 import Users from "./Pages/Dashboard/Users";
+import Order from "./Pages/Order/Order";
 // import RequireAdmin from "./components/RequireAuth/RequireAdmin";
 
 function App() {
@@ -34,6 +35,11 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/order" element={
+            <RequireAuth >
+              <Order />
+            </RequireAuth>
+          } />
           <Route
             path="/dashboard"
             element={

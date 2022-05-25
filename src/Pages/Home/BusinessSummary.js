@@ -13,7 +13,7 @@ const BusinessSummary = () => {
             subTitle="We have some happy Client & best awards"
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-auto lg:border rounded-sm ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 mx-auto lg:border rounded-sm ">
           <div className="stat place-items-center lg:border-r">
             <div className="text-4xl mb-2 text-primary hover:text-secondary">
               <FaUserAlt />
