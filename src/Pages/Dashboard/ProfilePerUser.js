@@ -12,9 +12,13 @@ const ProfilePerUser = (id) => {
   const [user] = useAuthState(auth);
   const { email } = user;
   const { data: updatedUser, refetch } = useQuery("updatedUser", () =>
-    fetch(`http://localhost:5000/updatedUser/${email}`).then((res) =>
-      res.json()
-    )
+    fetch(`http://localhost:5000/updatedUser/${email}`, {
+      method:"GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
   return (

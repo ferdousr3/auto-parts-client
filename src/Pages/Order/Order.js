@@ -1,10 +1,151 @@
-import React from 'react';
+import { data } from "autoprefixer";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import PageTitle from "../../components/Share/PageTitle/PageTitle";
 
 const Order = () => {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [orderPrice, setOrderPrice] = useState(0);
+  const [orderQuantity, setOrderQuantity] = useState(0);
+  const [stringQuantity, setStringQuantity] = useState(0);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm();
+  const { id } = useParams();
+  const { data: product } = useQuery("product", () =>
+    fetch(`http://localhost:5000/product/${id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
+  );
+  
+  const onSubmit = async (data) => {
+    const inputQuantity = watch("quantity");
+    const productPrice = parseFloat(product?.price);
+    setOrderQuantity(data.quantity);
+    if (parseFloat(data.quantity) > parseFloat(product?.quantity)) {
+      setTotalPrice(
+        <p className="text-xs text-red-500">Input Quantity is Higher</p>
+      );
+      setStringQuantity(
+        <p className="text-xs text-red-500">Input Quantity is Higher</p>
+      );
+    } else if (parseFloat(data.quantity) <= 0) {
+      setTotalPrice(
+        <p className="text-xs text-red-500">Please input a valid quantity</p>
+      );
+      setStringQuantity(
+        <p className="text-xs text-red-500">Please input a valid quantity</p>
+      );
+    } else {
+      const totalPrice = productPrice * inputQuantity;
+      setTotalPrice(totalPrice);
+      setOrderPrice(totalPrice);
+      reset();
+    }
+  };
+  const orderSubmit = () => {
+    const order = {
+      email: product?.email,
+      name: product?.name,
+      price: orderPrice,
+      quantity: orderQuantity,
+      status: "unpaid",
+    };
+    console.log(order);
+    setOrderQuantity(0);
+  };
+
   return (
     <>
-    order now
-      
+      <PageTitle title="Order" />
+      <div className="container mx-auto py-16 lg:py-32 ">
+        <div className="card lg:w-96 bg-base-100 shadow-sm border mx-auto lg:text-center">
+          <h1 className="pt-5 text-center">Please Order </h1>
+          <figure className="px-10 pt-10">
+            <img
+              src={product?.img}
+              alt="Shoes"
+              className="rounded-xl max-w-[10rem]"
+            />
+          </figure>
+          <div className="card-body items-center ">
+            {/* <h2 className="card-title">{product.name}</h2> */}
+            <p className=" text-sm md:text-lg text-accent font-normal ">
+              Name: <span className=" text-neutral ">{product?.name}</span>
+            </p>
+            <p className="text-lg text-accent font-normal">
+              Price: <span className=" text-primary ">${product?.price}</span> /
+              <span className="text-xs"> unit</span>
+            </p>
+            <p className="text-lg text-accent font-normal">
+              Available:
+              <span className=" text-primary ml-1 "> {product?.quantity}</span>
+              <span className="text-xs"> unit</span>
+            </p>
+            <span>${totalPrice}</span>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {/*quantity*/}
+              <div className="form-control w-full max-w-xs">
+                <input
+                  type="number"
+                  placeholder="Quantity"
+                  className="input input-bordered w-full max-w-xs"
+                  {...register("quantity", {
+                    required: {
+                      value: true,
+                      message: "Price is Required",
+                    },
+                    minLength: {
+                      value: 2,
+                      message: "Must be 10  or longer",
+                    },
+                  })}
+                />
+                <label className="label">
+                  {errors.quantity?.type === "required" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.quantity.message}
+                    </span>
+                  )}
+                  {errors.quantity?.type === "minLength" && (
+                    <span className="label-text-alt text-red-600">
+                      {errors.quantity.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+
+              <input
+                type="submit"
+                value="Calculate Amount"
+                className="btn w-full max-w-xs text-white  btn-secondary bg-accent hover:bg-primary border-0 "
+              />
+            </form>
+
+            <div className="card-actions">
+              <button
+                disabled={
+                  orderQuantity <= 0 || stringQuantity
+                }
+                onClick={orderSubmit}
+                className="btn btn-primary"
+              >
+                Order Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

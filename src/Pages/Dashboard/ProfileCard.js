@@ -1,10 +1,10 @@
 import React from "react";
 
 const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
-  console.log(updatedUser);
+
   return (
     <>
-      <div className="card bg-base-100 shadow border max-w-xl">
+      <div className="card bg-base-100 shadow border max-w-xl pr-2">
         <div className="card-body ">
           <div className={updatedUser === undefined ? "hidden" : "block"}>
             {updatedUser && (
@@ -16,19 +16,35 @@ const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
             )}
           </div>
           <h1 className="card-title  text-accent font-normal text-sm m-0 ">
-            Email: {updatedUser?.email}
+            Email:
+            <span className="text-xs font-medium text-accent">
+              {updatedUser?.email}
+            </span>
           </h1>
-          <h2 className="card-title  text-accent font-normal text-sm m-0 ">
-            Name: {updatedUser?.name}
+          <h2 className="card-title   text-accent font-normal text-sm m-0 ">
+            Name:
+            <span className="text-xs font-medium text-accent">
+              {updatedUser?.name}
+            </span>
           </h2>
           <div className={updatedUser === undefined ? "hidden" : "block"}>
             {updatedUser && (
               <>
                 <div className="div">
-                  <h3>Phone: {updatedUser?.phone}</h3>
+                  <h3>
+                    Phone:
+                    <span className="text-xs font-medium text-accent ml-1">
+                      {updatedUser?.phone}
+                    </span>
+                  </h3>
                 </div>
                 <div className="div">
-                  <h3>Address: {updatedUser?.address}</h3>
+                  <h3>
+                    Address:
+                    <span className="text-xs font-medium text-accent ml-1">
+                      {updatedUser?.address}
+                    </span>
+                  </h3>
                 </div>
                 <div className="div">
                   <a
@@ -37,7 +53,7 @@ const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
                     href={updatedUser?.fbLink}
                     className="text-primary"
                   >
-                    Facebook Link
+                    Facebook
                   </a>
                 </div>
               </>
@@ -50,7 +66,7 @@ const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
               htmlFor="user-add-modal"
               className=" badge badge-outline"
             >
-              Add information
+              Update information
             </label>
           </div>
         </div>

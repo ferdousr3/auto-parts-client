@@ -54,7 +54,7 @@ const ProfileUpdateModal = ({ profile, setProfile }) => {
             .then((res) => res.json())
             .then((result) => {
               if (result) {
-                console.log(result);
+                // console.log(result);
                 toast.success(`user ${user.displayName} add successfully`);
                 reset();
               } else toast.error(`user ${user.displayName} add to failed`);
