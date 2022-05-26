@@ -65,7 +65,7 @@ const Reviews = () => {
             className="mySwiper"
           >
             <div className="grid grid-cols-1 lg:grid-cols-3">
-              {reviews.map((review, index) => (
+              {reviews?.map((review, index) => (
                 <SwiperSlide key={index}>
                   <div className={styles.reviewCard}>
                     <Rating rating={review.rating} />

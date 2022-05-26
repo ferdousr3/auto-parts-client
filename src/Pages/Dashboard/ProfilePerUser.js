@@ -5,20 +5,18 @@ import ProfileUpdateModal from "./ProfileUpdateModal";
 import ProfileCard from "./ProfileCard";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
-import ProfileEditModal from "./ProfileEditModal";
+
 
 const ProfilePerUser = (id) => {
   const [profile, setProfile] = useState(null);
   const [user] = useAuthState(auth);
   const { email } = user;
-  const {
-    data: newUser,
-    isLoading,
-    refetch,
-  } = useQuery("newUser", () =>
-    fetch(`http://localhost:5000/newUser/${email}`).then((res) => res.json())
+  const { data: updatedUser, refetch } = useQuery("updatedUser", () =>
+    fetch(`http://localhost:5000/updatedUser/${email}`).then((res) =>
+      res.json()
+    )
   );
-  
+
   return (
     <>
       <div className="pb-14"></div>
@@ -27,19 +25,13 @@ const ProfilePerUser = (id) => {
           user={user}
           setProfile={setProfile}
           refetch={refetch}
-          newUser={newUser}
+          updatedUser={updatedUser}
         />
       </div>
       {profile && (
         <ProfileUpdateModal profile={profile} setProfile={setProfile} />
       )}
-      {profile && (
-        <ProfileEditModal
-          newUser={newUser}
-          profile={profile}
-          setProfile={setProfile}
-        />
-      )}
+
     </>
   );
 };

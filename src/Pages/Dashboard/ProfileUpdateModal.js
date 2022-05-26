@@ -1,65 +1,69 @@
-
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
-const ProfileUpdateModal = ({ profile,  setProfile }) => {
+const ProfileUpdateModal = ({ profile, setProfile }) => {
   const [user] = useAuthState(auth);
-  const {  name } = profile;
+  const email = user.email;
+  const { name } = profile;
+  const { data: updatedUser, refetch } = useQuery("updatedUser", () =>
+    fetch(`http://localhost:5000/newUser/${email}`).then((res) => res.json())
+  );
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm();
+  const imageStorageKey = "396c01ff41dfa2f53913961308fb5a70";
 
- const {
-   register,
-   formState: { errors },
-   handleSubmit,
-   reset,
- } = useForm();
-   const imageStorageKey = "396c01ff41dfa2f53913961308fb5a70";
+  const onSubmit = async (data) => {
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          const img = result.data.url;
+          const updatedUser = {
+            name: user.displayName,
+            email: user.email,
+            address: data.address,
+            phone: data.phone,
+            fbLink: data.fbLink,
+            img: img,
+          };
+          // Product data sent to database
+          const url = `http://localhost:5000/updatedUser/${email}`;
+          fetch(url, {
+            method: "PUT",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(updatedUser),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              if (result) {
+                console.log(result);
+                toast.success(`user ${user.displayName} add successfully`);
+                reset();
+              } else toast.error(`user ${user.displayName} add to failed`);
 
-   const onSubmit = async (data) => {
-     const image = data.image[0];
-     const formData = new FormData();
-     formData.append("image", image);
-     const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
-     fetch(url, {
-       method: "POST",
-       body: formData,
-     })
-       .then((res) => res.json())
-       .then((result) => {
-         if (result.success) {
-           const img = result.data.url;
-           const newUser = {
-             name: user.displayName,
-             email: user.email,
-             address: data.address,
-             phone: data.phone,
-             fbLink: data.fbLink,
-             img: img,
-           };
-           // Product data sent to database
-           const url = `http://localhost:5000/newUser`;
-           console.log(newUser);
-           fetch(url, {
-             method: "POST",
-             headers: {
-               "content-type": "application/json",
-               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-             },
-             body: JSON.stringify(newUser),
-           })
-             .then((res) => res.json())
-             .then((inserted) => {
-               if (inserted.insertedId) {
-                 toast.success(`user ${data.name} add successfully`);
-                 reset();
-               } else toast.error(`user ${data.name} add to failed`);
-             });
-         }
+            });
+        }
         //  console.log(result);
-       });
-   };
+      });
+  };
 
   return (
     <>
@@ -112,7 +116,7 @@ const ProfileUpdateModal = ({ profile,  setProfile }) => {
               </label>
               <input
                 type="text"
-                value={user.displayName}
+                value={user?.displayName}
                 disabled
                 className="input input-bordered w-full max-w-xs"
                 {...register("name")}
@@ -136,7 +140,7 @@ const ProfileUpdateModal = ({ profile,  setProfile }) => {
               </label>
             </div>
 
-            {/*quantity*/}
+            {/*phone*/}
             <div className="form-control w-full max-w-xs mx-auto ">
               <label className="label">
                 <span className="label-text">Phone Number</span>
@@ -157,19 +161,19 @@ const ProfileUpdateModal = ({ profile,  setProfile }) => {
                 })}
               />
               <label className="label">
-                {errors.quantity?.type === "required" && (
+                {errors.phone?.type === "required" && (
                   <span className="label-text-alt text-red-600">
-                    {errors.quantity.message}
+                    {errors.phone.message}
                   </span>
                 )}
-                {errors.quantity?.type === "minLength" && (
+                {errors.phone?.type === "minLength" && (
                   <span className="label-text-alt text-red-600">
-                    {errors.quantity.message}
+                    {errors.phone.message}
                   </span>
                 )}
               </label>
             </div>
-            {/*Price*/}
+            {/*address*/}
             <div className="form-control w-full max-w-xs mx-auto ">
               <label className="label">
                 <span className="label-text">Address</span>
@@ -203,7 +207,7 @@ const ProfileUpdateModal = ({ profile,  setProfile }) => {
                 )}
               </label>
             </div>
-            {/* description */}
+            {/* facebook Link*/}
             <div className="form-control w-full max-w-xs mx-auto ">
               <label className="label">
                 <span className="label-text">Facebook Link</span>
@@ -224,14 +228,14 @@ const ProfileUpdateModal = ({ profile,  setProfile }) => {
                 })}
               />
               <label className="label">
-                {errors.dfblink?.type === "required" && (
+                {errors.fbLink?.type === "required" && (
                   <span className="label-text-alt text-red-600">
-                    {errors.dfblink.message}
+                    {errors.fbLink.message}
                   </span>
                 )}
-                {errors.dfblink?.type === "minLength" && (
+                {errors.fbLink?.type === "minLength" && (
                   <span className="label-text-alt text-red-600">
-                    {errors.dfblink.message}
+                    {errors.fbLink.message}
                   </span>
                 )}
               </label>

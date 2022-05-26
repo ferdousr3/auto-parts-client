@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import Loading from "../../components/Loading/Loading";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useToken from "../../hooks/useToken";
+import useUser from "../../hooks/useUser";
 
 const Login = () => {
   const {
@@ -24,15 +25,16 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
   const [token] = useToken(user || gUser)
+  const [newToken] = useUser(user || gUser);
   const navigate = useNavigate();
   const location = useLocation();
 
   let from = location.state?.from?.pathname || "/";
   useEffect(() => {
-    if (token) {
+    if (token || newToken) {
       navigate(from, { replace: true });
     }
-  }, [token, from, navigate]);
+  }, [token, from, navigate,newToken]);
   if (loading || gLoading || sending) {
     return <Loading />;
   }
