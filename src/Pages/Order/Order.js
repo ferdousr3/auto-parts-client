@@ -1,15 +1,20 @@
 import { data } from "autoprefixer";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
+import auth from "../../firebase.init";
 
 const Order = () => {
+  const [user] = useAuthState(auth)
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
   const [orderQuantity, setOrderQuantity] = useState(0);
   const [stringQuantity, setStringQuantity] = useState(0);
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
@@ -27,7 +32,7 @@ const Order = () => {
       },
     }).then((res) => res.json())
   );
-  
+
   const onSubmit = async (data) => {
     const inputQuantity = watch("quantity");
     const productPrice = parseFloat(product?.price);
@@ -55,12 +60,29 @@ const Order = () => {
   };
   const orderSubmit = () => {
     const order = {
-      email: product?.email,
+      email: user?.email,
       name: product?.name,
       price: orderPrice,
       quantity: orderQuantity,
       status: "unpaid",
     };
+    const url = `http://localhost:5000/order`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((inserted) => {
+        if (inserted.insertedId) {
+          toast.success(`Place  $ ${orderPrice}  successfully`);
+          reset();
+        } else toast.error(`Place  $ ${orderPrice}  failed`);
+      });
+
     console.log(order);
     setOrderQuantity(0);
   };
@@ -68,14 +90,17 @@ const Order = () => {
   return (
     <>
       <PageTitle title="Order" />
+
+      
       <div className="container mx-auto py-16 lg:py-32 ">
         <div className="card lg:w-96 bg-base-100 shadow-sm border mx-auto lg:text-center">
+          <button onClick={()=>navigate('/')} className="btn btn-link" > Back to home </button>
           <h1 className="pt-5 text-center">Please Order </h1>
           <figure className="px-10 pt-10">
             <img
               src={product?.img}
               alt="Shoes"
-              className="rounded-xl max-w-[10rem]"
+              className="rounded-xl max-w-[5rem]"
             />
           </figure>
           <div className="card-body items-center ">
@@ -92,6 +117,7 @@ const Order = () => {
               <span className=" text-primary ml-1 "> {product?.quantity}</span>
               <span className="text-xs"> unit</span>
             </p>
+            <span className="text-xs text-red-500" >Minimum Order Quantity 10</span>
             <span>${totalPrice}</span>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/*quantity*/}
@@ -134,9 +160,7 @@ const Order = () => {
 
             <div className="card-actions">
               <button
-                disabled={
-                  orderQuantity <= 0 || stringQuantity
-                }
+                disabled={orderQuantity <= 0 || stringQuantity}
                 onClick={orderSubmit}
                 className="btn btn-primary"
               >

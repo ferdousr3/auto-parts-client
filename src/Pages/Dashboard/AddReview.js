@@ -5,10 +5,14 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
+import VerifyAdmin from "../../components/VerifyAdmin/VerifyAdmin";
 import auth from "../../firebase.init";
+import useAdmin from "../../hooks/useAdmin";
 
 const AddReview = () => {
   const [user, loading] = useAuthState(auth);
+  const [admin, adminLoading] = useAdmin(user);
+
   const {
     register,
     formState: { errors },
@@ -26,7 +30,6 @@ const AddReview = () => {
     };
     // Product data sent to database
     const url = `http://localhost:5000/reviews`;
-    console.log(Product);
     fetch(url, {
       method: "POST",
       headers: {
@@ -44,8 +47,11 @@ const AddReview = () => {
       });
   };
 
-  if (loading) {
+  if (loading || adminLoading) {
     return <Loading />;
+  }
+  if (!admin) {
+    return <VerifyAdmin />;
   }
 
   return (

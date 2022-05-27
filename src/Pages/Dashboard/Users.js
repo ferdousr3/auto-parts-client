@@ -23,7 +23,6 @@ const Users = () => {
       },
     }).then((res) => res.json())
   );
-  console.log(users);
 
   if (isLoading || loading || adminLoading) {
     return <Loading />;
