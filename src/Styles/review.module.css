@@ -12,17 +12,18 @@
 }
 .title {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 20px;
+  font-family: "Rajdhani", sans-serif;
   margin-bottom: 8px;
   color: #111111;
   line-height: 1.6;
 }
 .description {
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 300;
   color: #999;
-  line-height:1.5;
+  line-height: 1.5;
 }
 .cardFooter {
   display: flex;

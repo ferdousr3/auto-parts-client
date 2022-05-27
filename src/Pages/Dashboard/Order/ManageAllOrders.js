@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
-import PageTitle from "../../components/Share/PageTitle/PageTitle";
+import Loading from '../../../components/Loading/Loading';
+import PageTitle from "../../../components/Share/PageTitle/PageTitle";
+import AllOrdersRow from "./AllOrdersRow";
 
 const ManageAllOrders = () => {
   const { data: orders, isLoading } = useQuery("orderr", () =>
@@ -12,13 +14,20 @@ const ManageAllOrders = () => {
       },
     }).then((res) => res.json())
   );
-  console.log(orders);
+if(isLoading){
+  return <Loading />
+}
   return (
     <>
       <PageTitle title="All orders" />
       <div className="container mx-auto">
-        <div class="overflow-x-auto">
-          <table class="table w-full">
+        <div className="overflow-x-auto">
+          <div className="py-5">
+            <p>
+              Total Order: {orders?.length}
+            </p>
+          </div>
+          <table className="table w-full">
             <thead>
               <tr>
                 <th>sn</th>
@@ -31,14 +40,7 @@ const ManageAllOrders = () => {
             </thead>
             <tbody>
               {orders?.map((order, index) => (
-                <tr>
-                  <th>{index + 1}</th>
-                  <td>{order?.name}</td>
-                  <td>{order?.price}</td>
-                  <td>{order?.quantity}</td>
-                  <td>{order?.status}</td>
-                  <td>delete</td>
-                </tr>
+                <AllOrdersRow key={index} index={index} order={order} />
               ))}
             </tbody>
           </table>

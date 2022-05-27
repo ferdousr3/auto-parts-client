@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import Loading from "../../components/Loading/Loading";
+import Loading from "../../../components/Loading/Loading";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import ProductRow from "./ProductRow";
 

@@ -3,9 +3,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import Loading from "../../components/Loading/Loading";
-import PageTitle from "../../components/Share/PageTitle/PageTitle";
-import auth from "../../firebase.init";
+import Loading from "../../../components/Loading/Loading";
+import PageTitle from "../../../components/Share/PageTitle/PageTitle";
+import auth from "../../../firebase.init";
 
 const AddProduct = () => {
   const [user] = useAuthState(auth);
@@ -109,7 +109,7 @@ const AddProduct = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder="Product Name"
                   className="input input-bordered w-full max-w-xs"
                   {...register("name", {
                     required: {

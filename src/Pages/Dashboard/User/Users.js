@@ -1,11 +1,11 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
-import Loading from "../../components/Loading/Loading";
-import VerifyAdmin from "../../components/VerifyAdmin/VerifyAdmin";
-import auth from "../../firebase.init";
+import Loading from "../../../components/Loading/Loading";
+import VerifyAdmin from "../../../components/VerifyAdmin/VerifyAdmin";
+import auth from "../../../firebase.init";
 
-import useAdmin from "../../hooks/useAdmin";
+import useAdmin from "../../../hooks/useAdmin";
 import UserRow from "./UserRow";
 
 const Users = () => {

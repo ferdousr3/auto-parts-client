@@ -1,18 +1,15 @@
+import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
-import VerifyAdmin from "../../components/VerifyAdmin/VerifyAdmin";
 import auth from "../../firebase.init";
-import useAdmin from "../../hooks/useAdmin";
 
 const AddReview = () => {
   const [user, loading] = useAuthState(auth);
-  const [admin, adminLoading] = useAdmin(user);
-
   const {
     register,
     formState: { errors },
@@ -30,6 +27,7 @@ const AddReview = () => {
     };
     // Product data sent to database
     const url = `http://localhost:5000/reviews`;
+    console.log(Product);
     fetch(url, {
       method: "POST",
       headers: {
@@ -38,7 +36,15 @@ const AddReview = () => {
       },
       body: JSON.stringify(Product),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.status === 401 || res.status === 403 || res.status === 404) {
+          signOut(auth);
+          localStorage.removeItem("accessToken");
+          Navigate("/");
+        }
+        return res.json();
+      })
       .then((inserted) => {
         if (inserted.insertedId) {
           toast.success(`${data.rating} star review add successfully`);
@@ -47,11 +53,8 @@ const AddReview = () => {
       });
   };
 
-  if (loading || adminLoading) {
+  if (loading) {
     return <Loading />;
-  }
-  if (!admin) {
-    return <VerifyAdmin />;
   }
 
   return (

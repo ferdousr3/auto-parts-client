@@ -1,15 +1,18 @@
-import { data } from "autoprefixer";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
 import auth from "../../firebase.init";
+import VerifyAdmin from '../../components/VerifyAdmin/VerifyAdmin';
+import useAdmin from '../../hooks/useAdmin';
 
 const Order = () => {
-  const [user] = useAuthState(auth)
+  const [user, loading] = useAuthState(auth)
+   const [admin, adminLoading] = useAdmin(user);
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
   const [orderQuantity, setOrderQuantity] = useState(0);
@@ -23,7 +26,7 @@ const Order = () => {
     watch,
   } = useForm();
   const { id } = useParams();
-  const { data: product } = useQuery("product", () =>
+  const { data: product,isLoading } = useQuery("product", () =>
     fetch(`http://localhost:5000/product/${id}`, {
       method: "GET",
       headers: {
@@ -87,14 +90,27 @@ const Order = () => {
     setOrderQuantity(0);
   };
 
+
+  if (isLoading || loading ) {
+    return <Loading />;
+  }
+
   return (
     <>
       <PageTitle title="Order" />
+      <div className="container mx-auto pt-10">
+        <div className="div">
+          <h5>Name: {user.displayName}</h5>
+          <h6>Email: {user.email}</h6>
+        </div>
+      </div>
 
-      
-      <div className="container mx-auto py-16 lg:py-32 ">
+      <div className="container mx-auto py-16 lg:py-16 ">
         <div className="card lg:w-96 bg-base-100 shadow-sm border mx-auto lg:text-center">
-          <button onClick={()=>navigate('/')} className="btn btn-link" > Back to home </button>
+          <button onClick={() => navigate("/")} className="btn btn-link">
+            {" "}
+            Back to home{" "}
+          </button>
           <h1 className="pt-5 text-center">Please Order </h1>
           <figure className="px-10 pt-10">
             <img
@@ -117,7 +133,9 @@ const Order = () => {
               <span className=" text-primary ml-1 "> {product?.quantity}</span>
               <span className="text-xs"> unit</span>
             </p>
-            <span className="text-xs text-red-500" >Minimum Order Quantity 10</span>
+            <span className="text-xs text-red-500">
+              Minimum Order Quantity 10
+            </span>
             <span>${totalPrice}</span>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/*quantity*/}

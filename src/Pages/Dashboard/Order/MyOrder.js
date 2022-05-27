@@ -2,22 +2,21 @@ import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate } from "react-router-dom";
-import PageTitle from "../../components/Share/PageTitle/PageTitle";
-import auth from "../../firebase.init";
+import PageTitle from "../../../components/Share/PageTitle/PageTitle";
+import auth from "../../../firebase.init";
 const MyAppointment = () => {
   const [user] = useAuthState(auth);
-  const [appointments, setAppointments] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+      fetch(`http://localhost:5000/singleOrder?email=${user.email}`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
         .then((res) => {
-          console.log("res", res);
           if (res.status === 401 || res.status === 403) {
             signOut(auth);
             localStorage.removeItem("accessToken");
@@ -26,17 +25,32 @@ const MyAppointment = () => {
           return res.json();
         })
         .then((data) => {
-          setAppointments(data);
+          setOrders(data);
         });
     }
   }, [user]);
+  // const [deletingOrder, setDeletingOrder] = useState(null);
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   refetch,
+  // } = useQuery("products", () =>
+  //   fetch("http://localhost:5000/products", {
+  //     headers: {
+  //       authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //     },
+  //   }).then((res) => res.json())
+  // );
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
-      <PageTitle title="My Appointment" />
+      <PageTitle title="My Order" />
 
-      <p className="mb-2 ml-2 text-accent ">
-        My Appointment {appointments.length}
+      <p className="mb-2 ml-2 text-sm  text-accent ">
+        My Total Orders: {orders.length}
       </p>
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -45,20 +59,22 @@ const MyAppointment = () => {
             <tr>
               <th>SN</th>
               <th>Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Treatment</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>stats</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {appointments.map((appointment, index) => (
+            {orders.map((order, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
-                <td>{appointment.patientName}</td>
-                <td>{appointment.date}</td>
-                <td>{appointment.slot}</td>
-                <td>{appointment.treatment}</td>
+                <td>{order.name}</td>
+                <td>{order.quantity}</td>
+                <td>{order.price}</td>
+                <td>{order.status}</td>
+                <td>Cancel</td>
               </tr>
             ))}
           </tbody>

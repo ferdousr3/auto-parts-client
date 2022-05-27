@@ -14,13 +14,14 @@ import Login from "./Pages/Login/Login";
 import MyPortfolio from "./Pages/MyPortfolio/MyPortfolio";
 import SignUp from "./Pages/SignUp/SignUp";
 import Profile from "./Pages/Dashboard/Profile";
-import AddProduct from "./Pages/Dashboard/AddProduct";
+import AddProduct from "./Pages/Dashboard/Product/AddProduct";
 import AddReview from "./Pages/Dashboard/AddReview";
-import ManageProduct from "./Pages/Dashboard/ManageProduct";
-import ManageAllOrders from "./Pages/Dashboard/ManageAllOrders";
-import Users from "./Pages/Dashboard/Users";
+import ManageProduct from "./Pages/Dashboard/Product/ManageProduct";
+import ManageAllOrders from "./Pages/Dashboard/Order/ManageAllOrders";
+import Users from "./Pages/Dashboard/User/Users";
 import Order from "./Pages/Order/Order";
 import RequireAdmin from "./components/RequireAuth/RequireAdmin";
+import MyOrder from './Pages/Dashboard/Order/MyOrder'
 
 function App() {
   return (
@@ -77,7 +78,15 @@ function App() {
                 </RequireAdmin>
               }
             />
-            <Route path="users" element={<Users />} />
+            <Route
+              path="users"
+              element={
+                <RequireAdmin>
+                  <Users />
+                </RequireAdmin>
+              }
+            />
+            <Route path='myOrder' element={<MyOrder/>} />
           </Route>
           <Route path="/myPortfolio" element={<MyPortfolio />} />
           <Route path="/login" element={<Login />} />
