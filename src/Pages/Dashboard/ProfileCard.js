@@ -1,7 +1,6 @@
 import React from "react";
 
-const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
-
+const ProfileCard = ({ user, setProfile, updatedUser, dataRecall }) => {
   return (
     <>
       <div className="card bg-base-100 shadow border max-w-xl pr-2">
@@ -62,7 +61,7 @@ const ProfileCard = ({ user, setProfile, updatedUser, refetch }) => {
 
           <div className="card-actions">
             <label
-              onClick={() => setProfile({ user, refetch })}
+              onClick={() => setProfile({ user, dataRecall })}
               htmlFor="user-add-modal"
               className=" badge badge-outline"
             >

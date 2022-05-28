@@ -1,17 +1,17 @@
-import React, { useRef, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
+// import required modules
+import { Autoplay, Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-// import required modules
-import { Autoplay, Navigation, Pagination } from "swiper";
-import { useQuery } from "react-query";
 import Loading from "../../components/Loading/Loading";
-import styles from '../../Styles/review.module.css'
-import Rating from "./Rating";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import styles from '../../Styles/review.module.css';
+import Rating from "./Rating";
 
 const Reviews = () => {
   const {
@@ -19,7 +19,7 @@ const Reviews = () => {
     isLoading,
     refetch,
   } = useQuery("reviews", () =>
-    fetch("http://localhost:5000/reviews").then((res) => res.json())
+    fetch("https://auto-parts0.herokuapp.com/reviews").then((res) => res.json())
   );
 
   if (isLoading) {

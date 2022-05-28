@@ -2,12 +2,13 @@ import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsBoxArrowInLeft, BsBoxArrowInRight } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo/logo.png";
 import auth from "../../../firebase.init";
 
 const Header = () => {
   const [user] = useAuthState(auth);
+  const {pathname} = useLocation()
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(!open);
@@ -102,9 +103,9 @@ const Header = () => {
                         : "hover:text-primary transition-colors duration-300 "
                     }
                     onClick={handleClose}
-                    to="/order"
+                    to="/contact"
                   >
-                    Order
+                    Contact Us
                   </NavLink>
                 </li>
                 <li>
@@ -115,9 +116,9 @@ const Header = () => {
                         : "hover:text-primary transition-colors duration-300 "
                     }
                     onClick={handleClose}
-                    to="/contact"
+                    to="/dashboard"
                   >
-                    Contact Us
+                    Dashboard
                   </NavLink>
                 </li>
               </ul>
@@ -128,6 +129,15 @@ const Header = () => {
                   className="hidden sm:block"
                   width="150"
                   height="80"
+                  src={Logo}
+                  alt="logo"
+                />
+              </span>
+              <span className="text-sm  lg:-ml-5 sm:text-lg flex items-center   ">
+                <img
+                  className="block sm:hidden"
+                  width="100"
+                  height="30"
                   src={Logo}
                   alt="logo"
                 />
@@ -161,18 +171,6 @@ const Header = () => {
                   Blogs
                 </NavLink>
               </li>
-              {/* <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-primary"
-                      : "hover:text-primary transition-colors duration-300 "
-                  }
-                  to="/order"
-                >
-                  Order
-                </NavLink>
-              </li> */}
               <li>
                 <NavLink
                   className={({ isActive }) =>
@@ -229,7 +227,14 @@ const Header = () => {
           {/* navbar end items */}
           <ul className="flex items-center h-full">
             {user && (
-              <li className="pl-4 ">
+              <li
+                style={
+                  pathname.includes("dashboard")
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+                className="pl-4  "
+              >
                 <label
                   htmlFor="my-drawer-2"
                   className="text-sm text-secondary font-medium lg:hidden"
@@ -240,7 +245,7 @@ const Header = () => {
             )}
             <li className="pl-2 flex items-center ">
               {user && (
-                <p className="text-xs pr-2">{user?.displayName?.slice(0, 2)}</p>
+                <p className="text-sm pr-2 font-semibold text-secondary ">{user?.displayName?.slice(0, 2)}</p>
               )}
               {user ? (
                 <button

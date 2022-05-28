@@ -3,16 +3,16 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import Button from '../../components/Share/Button/Button'
+
 
 const OurProducts = () => {
  
   const {
     data: products,
     isLoading,
-    refetch,
+  
   } = useQuery("products", () =>
-    fetch("http://localhost:5000/products").then((res) => res.json())
+    fetch("https://auto-parts0.herokuapp.com/products").then((res) => res.json())
   );
 
   if(isLoading){
@@ -44,7 +44,7 @@ const OurProducts = () => {
                   Available: {product.quantity} unit
                 </h2>
                 <h3 className="font-[700] text-primary text-2xl font-display">
-                  ${product.price}.00 / <span className="text-sm font-medium text-accent" >unit</span>
+                  ${product?.price}.00 / <span className="text-sm font-medium text-accent" >unit</span>
                 </h3>
                 <div className="my-2">
                   <Link

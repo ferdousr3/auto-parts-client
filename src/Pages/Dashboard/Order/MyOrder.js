@@ -1,49 +1,28 @@
-import { signOut } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Navigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import Loading from "../../../components/Loading/Loading";
 import PageTitle from "../../../components/Share/PageTitle/PageTitle";
 import auth from "../../../firebase.init";
+import DeleteOrderModal from "./DeleteOrderModal";
+import OrderRow from "./OrderRow";
 const MyAppointment = () => {
   const [user] = useAuthState(auth);
-  const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    if (user) {
-      fetch(`http://localhost:5000/singleOrder?email=${user.email}`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-        .then((res) => {
-          if (res.status === 401 || res.status === 403) {
-            signOut(auth);
-            localStorage.removeItem("accessToken");
-            Navigate("/");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setOrders(data);
-        });
-    }
-  }, [user]);
-  // const [deletingOrder, setDeletingOrder] = useState(null);
-  // const {
-  //   data: products,
-  //   isLoading,
-  //   refetch,
-  // } = useQuery("products", () =>
-  //   fetch("http://localhost:5000/products", {
-  //     headers: {
-  //       authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //     },
-  //   }).then((res) => res.json())
-  // );
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  const [deletingOrder, setDeletingOrder] = useState(null);
+  const {
+    data: orders,
+    isLoading,
+    refetch,
+  } = useQuery(["products", user.email], () =>
+    fetch(`https://auto-parts0.herokuapp.com/singleOrder?email=${user.email}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
+  );
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -61,25 +40,32 @@ const MyAppointment = () => {
               <th>Name</th>
               <th>Quantity</th>
               <th>Price</th>
-              <th>stats</th>
+              {/* <th>stats</th> */}
+              <th>Payment</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <th>{index + 1}</th>
-                <td>{order.name}</td>
-                <td>{order.quantity}</td>
-                <td>{order.price}</td>
-                <td>{order.status}</td>
-                <td>Cancel</td>
-              </tr>
+            {orders?.map((order, index) => (
+              <OrderRow
+                key={index}
+                index={index}
+                order={order}
+                refetch={refetch}
+                setDeletingOrder={setDeletingOrder}
+              />
             ))}
           </tbody>
         </table>
       </div>
+      {deletingOrder && (
+        <DeleteOrderModal
+          setDeletingOrder={setDeletingOrder}
+          refetch={refetch}
+          deletingOrder={deletingOrder}
+        />
+      )}
     </>
   );
 };

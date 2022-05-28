@@ -9,8 +9,20 @@ const AllOrdersRow = ({index,order}) => {
         <td>{order?.name}</td>
         <td>{order?.price}</td>
         <td>{order?.quantity}</td>
-        <td>{order?.status}</td>
-        <td>delete</td>
+        <td>
+          {order.paid ? (
+            <span className="badge badge-primary">Paid</span>
+          ) : (
+            <span className="badge badge-accent">{order?.status}</span>
+          )}
+        </td>
+        <td>
+          {order.paid ? (
+            <span className="badge badge-primary">Pending</span>
+          ) : (
+            <span className="badge badge-accent">{order?.status}</span>
+          )}
+        </td>
       </tr>
     </>
   );

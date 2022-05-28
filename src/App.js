@@ -1,27 +1,28 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Dashboard from "./Pages/Dashboard/Dashboard";
+import RequireAdmin from "./components/RequireAuth/RequireAdmin";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Footer from "./components/Share/Footer/Footer";
 import Header from "./components/Share/Header/Header";
 import About from "./Pages/About/About";
 import Blogs from "./Pages/Blogs/Blogs";
 import Contact from "./Pages/Contact/Contact";
+import AddReview from "./Pages/Dashboard/AddReview";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import ManageAllOrders from "./Pages/Dashboard/Order/ManageAllOrders";
+import MyOrder from './Pages/Dashboard/Order/MyOrder';
+import Payment from "./Pages/Dashboard/Payment/Payment";
+import AddProduct from "./Pages/Dashboard/Product/AddProduct";
+import ManageProduct from "./Pages/Dashboard/Product/ManageProduct";
+import Profile from "./Pages/Dashboard/Profile";
+import Users from "./Pages/Dashboard/User/Users";
 import Error from "./Pages/Error/Error";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import MyPortfolio from "./Pages/MyPortfolio/MyPortfolio";
-import SignUp from "./Pages/SignUp/SignUp";
-import Profile from "./Pages/Dashboard/Profile";
-import AddProduct from "./Pages/Dashboard/Product/AddProduct";
-import AddReview from "./Pages/Dashboard/AddReview";
-import ManageProduct from "./Pages/Dashboard/Product/ManageProduct";
-import ManageAllOrders from "./Pages/Dashboard/Order/ManageAllOrders";
-import Users from "./Pages/Dashboard/User/Users";
 import Order from "./Pages/Order/Order";
-import RequireAdmin from "./components/RequireAuth/RequireAdmin";
-import MyOrder from './Pages/Dashboard/Order/MyOrder'
+import SignUp from "./Pages/SignUp/SignUp";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
               }
             />
             <Route path="addReview" element={<AddReview />} />
+            <Route path="payment/:id" element={<Payment />} />
             <Route
               path="manageProduct"
               element={

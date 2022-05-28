@@ -1,9 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import Loading from "../../../components/Loading/Loading";
 import PageTitle from "../../../components/Share/PageTitle/PageTitle";
 import auth from "../../../firebase.init";
 
@@ -15,12 +13,8 @@ const AddProduct = () => {
     handleSubmit,
     reset,
   } = useForm();
-  // const { data: services, isLoading } = useQuery("services", () =>
-  //   fetch("http://localhost:5000/service").then((res) => res.json())
-  // );
 
   const imageStorageKey = "396c01ff41dfa2f53913961308fb5a70";
-
   const onSubmit = async (data) => {
     const image = data.image[0];
     const formData = new FormData();
@@ -43,7 +37,7 @@ const AddProduct = () => {
             img: img,
           };
           // Product data sent to database
-          const url = `http://localhost:5000/Products`;
+          const url = `https://auto-parts0.herokuapp.com/Products`;
           console.log(Product);
           fetch(url, {
             method: "POST",
@@ -61,7 +55,6 @@ const AddProduct = () => {
               } else toast.error(`Product ${data.name} add to failed`);
             });
         }
-        console.log(result);
       });
   };
 

@@ -8,7 +8,7 @@ const DeleteOrderModal = ({
 }) => {
   const { name, _id } = deletingOrder;
   const handleDelete = () => {
-    fetch(`http://localhost:5000/order/${_id}`, {
+    fetch(`https://auto-parts0.herokuapp.com/order/${_id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -17,7 +17,7 @@ const DeleteOrderModal = ({
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount) {
-          toast.success(`Product: ${name} is deleted`);
+          toast.success(`Order  ${name} is deleted`);
           setDeletingOrder(null);
           refetch();
         }
@@ -27,7 +27,7 @@ const DeleteOrderModal = ({
     <>
       <input
         type="checkbox"
-        id="delete-confirm-modal"
+        id="delete-order-modal"
         className="modal-toggle"
       />
       <div className="modal modal-bottom sm:modal-middle z-30 ">
@@ -61,7 +61,7 @@ const DeleteOrderModal = ({
             </div>
             <div className="modal-action">
               <label
-                htmlFor="delete-confirm-modal"
+                htmlFor="delete-order-modal"
                 className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
               >
                 No, cancel

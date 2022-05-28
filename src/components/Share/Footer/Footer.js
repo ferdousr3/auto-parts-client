@@ -57,7 +57,7 @@ const Footer = () => {
                 Services
               </span>
               <Link to="/" className="link link-hover">
-                Branding
+                Easy Payment
               </Link>
               <Link to="/" className="link link-hover">
                 Design
@@ -66,7 +66,7 @@ const Footer = () => {
                 Marketing
               </Link>
               <Link to="/" className="link link-hover">
-                Advertisement
+                Online delivery
               </Link>
             </div>
             <div className="lg:col-span-2">
@@ -94,7 +94,7 @@ const Footer = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="email@site.com"
+                    placeholder="yor email"
                     className="input input-bordered w-full pr-16"
                   />
                   <button className="btn btn-primary absolute top-0 right-0 rounded-l-none">

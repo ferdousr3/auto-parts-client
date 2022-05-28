@@ -8,7 +8,7 @@ const DeleteConfirmModal = ({
 }) => {
   const { name ,_id} = deletingProduct;
   const handleDelete = () => {
-    fetch(`http://localhost:5000/product/${_id}`, {
+    fetch(`https://auto-parts0.herokuapp.com/product/${_id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

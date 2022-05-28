@@ -7,7 +7,7 @@ const useUser = (user) => {
     const name = user?.displayName?.displayName;
     const currentUser = { email: email, name: name };
     if (email) {
-      fetch(`http://localhost:5000/updateUser/${email}`, {
+      fetch(`https://auto-parts0.herokuapp.com/updateUser/${email}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

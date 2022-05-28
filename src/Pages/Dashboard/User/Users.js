@@ -4,9 +4,9 @@ import { useQuery } from "react-query";
 import Loading from "../../../components/Loading/Loading";
 import VerifyAdmin from "../../../components/VerifyAdmin/VerifyAdmin";
 import auth from "../../../firebase.init";
-
 import useAdmin from "../../../hooks/useAdmin";
 import UserRow from "./UserRow";
+
 
 const Users = () => {
   const [user, loading] = useAuthState(auth);
@@ -16,7 +16,7 @@ const Users = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("http://localhost:5000/user", {
+    fetch("https://auto-parts0.herokuapp.com/user", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

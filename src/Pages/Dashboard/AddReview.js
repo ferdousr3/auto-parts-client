@@ -26,8 +26,7 @@ const AddReview = () => {
       description: data.description,
     };
     // Product data sent to database
-    const url = `http://localhost:5000/reviews`;
-    console.log(Product);
+    const url = `https://auto-parts0.herokuapp.com/reviews`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -37,7 +36,6 @@ const AddReview = () => {
       body: JSON.stringify(Product),
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 401 || res.status === 403 || res.status === 404) {
           signOut(auth);
           localStorage.removeItem("accessToken");

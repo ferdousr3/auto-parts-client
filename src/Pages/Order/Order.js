@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
 import auth from "../../firebase.init";
-import VerifyAdmin from '../../components/VerifyAdmin/VerifyAdmin';
 import useAdmin from '../../hooks/useAdmin';
 
 const Order = () => {
@@ -27,7 +26,7 @@ const Order = () => {
   } = useForm();
   const { id } = useParams();
   const { data: product,isLoading } = useQuery("product", () =>
-    fetch(`http://localhost:5000/product/${id}`, {
+    fetch(`https://auto-parts0.herokuapp.com/product/${id}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -69,7 +68,7 @@ const Order = () => {
       quantity: orderQuantity,
       status: "unpaid",
     };
-    const url = `http://localhost:5000/order`;
+    const url = `https://auto-parts0.herokuapp.com/order`;
     fetch(url, {
       method: "POST",
       headers: {

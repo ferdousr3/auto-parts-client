@@ -17,12 +17,11 @@ const Blogs = () => {
         />
         <Blog
           question="How does prototypical inheritance work?"
-          answer="In programming, we as often as possible need to take something and widen it.For instance, we have a client object with its properties and strategies, and need to make executive and guest as fairly changed varieties of it. We should reuse what we have in client, not copy/reimplement its strategies, just create one more article on top of it. With respect to heritage, JavaScript simply has one form: objects. Every thing has a secret property which holds an association with another thing called its model. That model thing has its own personal model, and so on until an article is reached with invalid as its model. By definition, invalid has no model, and goes probably as the last association in this model chain."
+          answer="javascript object methods and properties contain an internal and hidden property known as Prototype. The Prototypal Inheritance is a powerful feature in javascript used to add methods and properties to objects.JavaScript allowed for 'prototypal inheritance' after ES6 updates. by this method objects can be shared, extended, and copied an object can inherit the properties and methods of another object. and for this method easy inheritance of structure (data fields), behavior, and state (data values)."
         />
         <Blog
-          question="You have an array of products. Each product has a name, price, description, etc. How will you implement a search to find products by name?"
-          answer="Search and sifting are extremely fundamental elements that an API should have to productively serve information to the client application. By dealing with these procedure on the server-side, we can decrease how much handling that must be done on the client application, consequently expanding its exhibition.
-          A very famous approach to carrying out this is with the assistance of question strings. A question string is a piece of the URL which permits us to pass information from client to server as well as the other way around as boundaries and their qualities.Adding Mock Data: For doing looking and separating, we really want a few false information for example a rundown of clients whereupon we can do these tasks."
+          question="Why you do not set the state directly in React?"
+          answer="When we directly update the state, it does not change immediately it can not store data. we can not control the state across all components. any states are a data store that contains the data of a component and renders it. When the data needs to change something on the render, that value should be supplied from the store or state. Whenever the data in the state changes, react will trigger a re-render with the new state which the view consumes and shows on the screen, for this reason, it is faster and it happens with virtual DOM."
         />
         <Blog
           question="What is a unit test? Why should write unit tests?"

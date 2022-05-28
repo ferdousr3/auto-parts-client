@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import Loading from "../../components/Loading/Loading";
-import ProfileUpdateModal from "./ProfileUpdateModal";
-import ProfileCard from "./ProfileCard";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useQuery } from "react-query";
 import auth from "../../firebase.init";
-
+import ProfileCard from "./ProfileCard";
+import ProfileUpdateModal from "./ProfileUpdateModal";
 
 const ProfilePerUser = (id) => {
   const [profile, setProfile] = useState(null);
   const [user] = useAuthState(auth);
   const { email } = user;
-  const { data: updatedUser, refetch } = useQuery("updatedUser", () =>
-    fetch(`http://localhost:5000/updatedUser/${email}`, {
-      method:"GET",
+  const { data: updatedUser, refetch } = useQuery(["updatedUser", email], () =>
+    fetch(`https://auto-parts0.herokuapp.com/updatedUser/${email}`, {
+      method: "GET",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }).then((res) => res.json())
   );
-
+  const dataRecall = refetch();
   return (
     <>
       <div className="pb-14"></div>
@@ -28,14 +26,17 @@ const ProfilePerUser = (id) => {
         <ProfileCard
           user={user}
           setProfile={setProfile}
-          refetch={refetch}
+          dataRecall={dataRecall}
           updatedUser={updatedUser}
         />
       </div>
       {profile && (
-        <ProfileUpdateModal profile={profile} setProfile={setProfile} />
+        <ProfileUpdateModal
+          refetch={refetch}
+          profile={profile}
+          setProfile={setProfile}
+        />
       )}
-
     </>
   );
 };

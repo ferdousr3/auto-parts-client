@@ -1,17 +1,14 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
-const ProfileUpdateModal = ({ profile, setProfile }) => {
+const ProfileUpdateModal = ({ profile, refetch, setProfile }) => {
   const [user] = useAuthState(auth);
   const email = user.email;
   const { name } = profile;
-  const { data: updatedUser, refetch } = useQuery("updatedUser", () =>
-    fetch(`http://localhost:5000/newUser/${email}`).then((res) => res.json())
-  );
+  
   const {
     register,
     formState: { errors },
@@ -42,7 +39,7 @@ const ProfileUpdateModal = ({ profile, setProfile }) => {
             img: img,
           };
           // Product data sent to database
-          const url = `http://localhost:5000/updatedUser/${email}`;
+          const url = `https://auto-parts0.herokuapp.com/updatedUser/${email}`;
           fetch(url, {
             method: "PUT",
             headers: {
@@ -57,11 +54,11 @@ const ProfileUpdateModal = ({ profile, setProfile }) => {
                 // console.log(result);
                 toast.success(`user ${user.displayName} add successfully`);
                 reset();
+                refetch()
               } else toast.error(`user ${user.displayName} add to failed`);
-
             });
         }
-        //  console.log(result);
+         console.log(result);
       });
   };
 
