@@ -7,16 +7,16 @@ import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
 import auth from "../../firebase.init";
-import useAdmin from '../../hooks/useAdmin';
+import useAdmin from "../../hooks/useAdmin";
 
 const Order = () => {
-  const [user, loading] = useAuthState(auth)
-   const [admin, adminLoading] = useAdmin(user);
+  const [user, loading] = useAuthState(auth);
+  const [admin, adminLoading] = useAdmin(user);
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderPrice, setOrderPrice] = useState(0);
   const [orderQuantity, setOrderQuantity] = useState(0);
-  const [stringQuantity, setStringQuantity] = useState(0);
-  const navigate = useNavigate()
+  const [stringQuantity, setStringQuantity] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -25,7 +25,7 @@ const Order = () => {
     watch,
   } = useForm();
   const { id } = useParams();
-  const { data: product,isLoading } = useQuery("product", () =>
+  const { data: product, isLoading } = useQuery("product", () =>
     fetch(`https://auto-parts0.herokuapp.com/product/${id}`, {
       method: "GET",
       headers: {
@@ -34,7 +34,9 @@ const Order = () => {
       },
     }).then((res) => res.json())
   );
-
+  if (isLoading || loading) {
+    return <Loading />;
+  }
   const onSubmit = async (data) => {
     const inputQuantity = watch("quantity");
     const productPrice = parseFloat(product?.price);
@@ -55,6 +57,7 @@ const Order = () => {
       );
     } else {
       const totalPrice = productPrice * inputQuantity;
+      setStringQuantity(0);
       setTotalPrice(totalPrice);
       setOrderPrice(totalPrice);
       reset();
@@ -89,28 +92,17 @@ const Order = () => {
     setOrderQuantity(0);
   };
 
-
-  if (isLoading || loading ) {
-    return <Loading />;
-  }
-
   return (
     <>
       <PageTitle title="Order" />
-      <div className="container mx-auto pt-10">
-        <div className="div">
-          <h5>Name: {user.displayName}</h5>
-          <h6>Email: {user.email}</h6>
-        </div>
-      </div>
-
       <div className="container mx-auto py-16 lg:py-16 ">
         <div className="card lg:w-96 bg-base-100 shadow-sm border mx-auto lg:text-center">
           <button onClick={() => navigate("/")} className="btn btn-link">
-            {" "}
-            Back to home{" "}
+            Back to home
           </button>
-          <h1 className="pt-5 text-center">Please Order </h1>
+          <h5 className="text-xs">Hello! {user.displayName} Please Order</h5>
+          <h6 className="text-xs">Email: {user.email}</h6>
+
           <figure className="px-10 pt-10">
             <img
               src={product?.img}
@@ -120,7 +112,7 @@ const Order = () => {
           </figure>
           <div className="card-body items-center ">
             {/* <h2 className="card-title">{product.name}</h2> */}
-            <p className=" text-sm md:text-lg text-accent font-normal ">
+            <p className=" text-sm md:text-sm text-accent font-normal ">
               Name: <span className=" text-neutral ">{product?.name}</span>
             </p>
             <p className="text-lg text-accent font-normal">
@@ -132,10 +124,13 @@ const Order = () => {
               <span className=" text-primary ml-1 "> {product?.quantity}</span>
               <span className="text-xs"> unit</span>
             </p>
-            <span className="text-xs text-red-500">
+            <span className="text-xs text-indigo-700 ">
               Minimum Order Quantity 10
             </span>
-            <span>${totalPrice}</span>
+            {/* show total order amount */}
+            <span>
+              {!stringQuantity && "$"} {totalPrice}
+            </span>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/*quantity*/}
               <div className="form-control w-full max-w-xs">
