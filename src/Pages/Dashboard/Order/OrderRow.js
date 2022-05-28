@@ -9,7 +9,15 @@ const OrderRow = ({ index, order, setDeletingOrder }) => {
         <td>{order.name}</td>
         <td>{order.quantity}</td>
         <td>$ {order.price}</td>
-        {/* <td>{order.status}</td> */}
+        <td>
+          {order.shipping ? (
+            <span className="badge bg-indigo-600 text-slate-300 ">
+              Delivered
+            </span>
+          ) : (
+            <span className="badge badge-accent">Pending</span>
+          )}
+        </td>
         <td>
           {order?.price && !order?.paid && (
             <Link
@@ -25,7 +33,10 @@ const OrderRow = ({ index, order, setDeletingOrder }) => {
         </td>
         <td>
           {order.paid ? (
-            <span className="btn btn-xs btn-active btn-secondary"> TransactionId:{order?.transactionId}</span>
+            <span className="btn btn-xs btn-active btn-secondary">
+              {" "}
+              TransactionId:{order?.transactionId}
+            </span>
           ) : (
             <label
               onClick={() => setDeletingOrder(order)}

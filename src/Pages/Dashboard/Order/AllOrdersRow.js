@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const AllOrdersRow = ({ index, order, refetch }) => {
   const { _id } = order;
   const shipping = () => {
-    const url = `http://localhost:5000/order/shipping/${_id}`;
+    const url = `https://auto-parts0.herokuapp.com/order/shipping/${_id}`;
     fetch(url, {
       method: "PUT",
       headers: {

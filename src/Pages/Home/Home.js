@@ -1,5 +1,4 @@
 import React from "react";
-import ContactForm from "../../components/ContactForm/ContactForm";
 import PageTitle from "../../components/Share/PageTitle/PageTitle";
 import BusinessSummary from "./BusinessSummary";
 import Facility from "./Facility";
