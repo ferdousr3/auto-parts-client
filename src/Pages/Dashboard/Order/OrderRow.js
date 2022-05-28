@@ -8,7 +8,7 @@ const OrderRow = ({ index, order, setDeletingOrder }) => {
         <th>{index + 1}</th>
         <td>{order.name}</td>
         <td>{order.quantity}</td>
-        <td>{order.price}</td>
+        <td>$ {order.price}</td>
         {/* <td>{order.status}</td> */}
         <td>
           {order?.price && !order?.paid && (

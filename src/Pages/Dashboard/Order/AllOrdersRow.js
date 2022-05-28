@@ -1,13 +1,36 @@
-import React from 'react';
+import React from "react";
+import { toast } from "react-toastify";
 
-const AllOrdersRow = ({index,order}) => {
- 
+const AllOrdersRow = ({ index, order, refetch }) => {
+  const { _id } = order;
+  const shipping = () => {
+    const url = `http://localhost:5000/order/shipping/${_id}`;
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          toast.error(`Failed to shipping`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success(`successfully  shipping`);
+        }
+      });
+  };
+
   return (
     <>
       <tr>
         <th>{index + 1}</th>
         <td>{order?.name}</td>
-        <td>{order?.price}</td>
+        <td>$ {order?.price}</td>
         <td>{order?.quantity}</td>
         <td>
           {order.paid ? (
@@ -17,10 +40,18 @@ const AllOrdersRow = ({index,order}) => {
           )}
         </td>
         <td>
-          {order.paid ? (
-            <span className="badge badge-primary">Pending</span>
+          {order.shipping ? (
+            <span className="badge bg-indigo-600 text-slate-300 ">Delivered</span>
           ) : (
-            <span className="badge badge-accent">{order?.status}</span>
+            <>
+              {order.paid ? (
+                <button onClick={shipping} className="badge badge-primary">
+                  Pending
+                </button>
+              ) : (
+                <span className="badge badge-accent">{order?.status}</span>
+              )}
+            </>
           )}
         </td>
       </tr>

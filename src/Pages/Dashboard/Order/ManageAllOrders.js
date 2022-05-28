@@ -5,7 +5,7 @@ import PageTitle from "../../../components/Share/PageTitle/PageTitle";
 import AllOrdersRow from "./AllOrdersRow";
 
 const ManageAllOrders = () => {
-  const { data: orders, isLoading } = useQuery("order", () =>
+  const { data: orders, isLoading, refetch } = useQuery("order", () =>
     fetch("https://auto-parts0.herokuapp.com/order", {
       method: "GET",
       headers: {
@@ -17,7 +17,6 @@ const ManageAllOrders = () => {
   if (isLoading) {
     return <Loading />;
   }
-console.log(orders);
   return (
     <>
       <PageTitle title="All orders" />
@@ -39,7 +38,12 @@ console.log(orders);
             </thead>
             <tbody>
               {orders?.map((order, index) => (
-                <AllOrdersRow key={index} index={index} order={order} />
+                <AllOrdersRow
+                  key={index}
+                  index={index}
+                  order={order}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
