@@ -14,7 +14,7 @@ const MyAppointment = () => {
     isLoading,
     refetch,
   } = useQuery(["products", user.email], () =>
-    fetch(`https://auto-parts0.herokuapp.com/singleOrder?email=${user.email}`, {
+    fetch(`https://auto-parts-yer9.onrender.com/singleOrder?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

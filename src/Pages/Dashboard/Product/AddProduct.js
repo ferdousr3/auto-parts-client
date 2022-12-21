@@ -37,7 +37,7 @@ const AddProduct = () => {
             img: img,
           };
           // Product data sent to database
-          const url = `https://auto-parts0.herokuapp.com/Products`;
+          const url = `https://auto-parts-yer9.onrender.com/Products`;
           console.log(Product);
           fetch(url, {
             method: "POST",

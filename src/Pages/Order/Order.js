@@ -26,7 +26,7 @@ const Order = () => {
   } = useForm();
   const { id } = useParams();
   const { data: product, isLoading } = useQuery("product", () =>
-    fetch(`https://auto-parts0.herokuapp.com/product/${id}`, {
+    fetch(`https://auto-parts-yer9.onrender.com/product/${id}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -71,7 +71,7 @@ const Order = () => {
       quantity: orderQuantity,
       status: "unpaid",
     };
-    const url = `https://auto-parts0.herokuapp.com/order`;
+    const url = `https://auto-parts-yer9.onrender.com/order`;
     fetch(url, {
       method: "POST",
       headers: {

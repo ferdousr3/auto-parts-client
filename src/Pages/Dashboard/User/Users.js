@@ -16,7 +16,7 @@ const Users = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("https://auto-parts0.herokuapp.com/user", {
+    fetch("https://auto-parts-yer9.onrender.com/user", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

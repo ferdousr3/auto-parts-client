@@ -11,7 +11,7 @@ const ManageProduct = () => {
     isLoading,
     refetch,
   } = useQuery("products", () =>
-    fetch("https://auto-parts0.herokuapp.com/products", {
+    fetch("https://auto-parts-yer9.onrender.com/products", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

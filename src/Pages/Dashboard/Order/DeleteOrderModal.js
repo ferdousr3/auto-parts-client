@@ -8,7 +8,7 @@ const DeleteOrderModal = ({
 }) => {
   const { name, _id } = deletingOrder;
   const handleDelete = () => {
-    fetch(`https://auto-parts0.herokuapp.com/order/${_id}`, {
+    fetch(`https://auto-parts-yer9.onrender.com/order/${_id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -6,7 +6,7 @@ import AllOrdersRow from "./AllOrdersRow";
 
 const ManageAllOrders = () => {
   const { data: orders, isLoading, refetch } = useQuery("order", () =>
-    fetch("https://auto-parts0.herokuapp.com/order", {
+    fetch("https://auto-parts-yer9.onrender.com/order", {
       method: "GET",
       headers: {
         "content-type": "application/json",

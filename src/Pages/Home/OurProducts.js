@@ -12,7 +12,7 @@ const OurProducts = () => {
     isLoading,
   
   } = useQuery("products", () =>
-    fetch("https://auto-parts0.herokuapp.com/products").then((res) => res.json())
+    fetch("https://auto-parts-yer9.onrender.com/products").then((res) => res.json())
   );
 
   if(isLoading){

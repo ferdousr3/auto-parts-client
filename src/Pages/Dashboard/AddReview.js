@@ -26,7 +26,7 @@ const AddReview = () => {
       description: data.description,
     };
     // Product data sent to database
-    const url = `https://auto-parts0.herokuapp.com/reviews`;
+    const url = `https://auto-parts-yer9.onrender.com/reviews`;
     fetch(url, {
       method: "POST",
       headers: {

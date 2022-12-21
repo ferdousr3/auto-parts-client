@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <>
       <div className="text-base-content bg-[#333333]">
-        <div className="container mx-auto mt-5">
+        <div className="container mx-auto pt-5">
           <div className="footer p-10  text-white grid xl:grid-cols-12">
             <div className="lg:col-span-4">
               <img src={FooterLogo} alt='Footer logo' />

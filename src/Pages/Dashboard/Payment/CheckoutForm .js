@@ -16,7 +16,7 @@ const CheckoutForm = ({ order }) => {
 
   const { _id, price, email } = order;
 
-  const url = `https://auto-parts0.herokuapp.com/create-payment-intent`;
+  const url = `https://auto-parts-yer9.onrender.com/create-payment-intent`;
   useEffect(() => {
     fetch(url, {
       method: "POST",
@@ -78,7 +78,7 @@ const CheckoutForm = ({ order }) => {
         order: _id,
         transactionId: paymentIntent.id,
       };
-      fetch(`https://auto-parts0.herokuapp.com/order/${_id}`, {
+      fetch(`https://auto-parts-yer9.onrender.com/order/${_id}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",

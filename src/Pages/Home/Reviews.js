@@ -18,7 +18,7 @@ const Reviews = () => {
     data: reviews,
     isLoading,
   } = useQuery("reviews", () =>
-    fetch("https://auto-parts0.herokuapp.com/reviews").then((res) => res.json())
+    fetch("https://auto-parts-yer9.onrender.com/reviews").then((res) => res.json())
   );
 
   if (isLoading) {

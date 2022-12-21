@@ -39,7 +39,7 @@ const ProfileUpdateModal = ({ profile, refetch, setProfile }) => {
             img: img,
           };
           // Product data sent to database
-          const url = `https://auto-parts0.herokuapp.com/updatedUser/${email}`;
+          const url = `https://auto-parts-yer9.onrender.com/updatedUser/${email}`;
           fetch(url, {
             method: "PUT",
             headers: {

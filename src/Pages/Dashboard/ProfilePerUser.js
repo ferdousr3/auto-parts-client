@@ -10,7 +10,7 @@ const ProfilePerUser = (id) => {
   const [user] = useAuthState(auth);
   const { email } = user;
   const { data: updatedUser, refetch } = useQuery(["updatedUser", email], () =>
-    fetch(`https://auto-parts0.herokuapp.com/updatedUser/${email}`, {
+    fetch(`https://auto-parts-yer9.onrender.com/updatedUser/${email}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
